@@ -1,31 +1,28 @@
-# Design QA — Dashboard Foundation
+# Design QA — Settings Page
 
 ## Evidence
 
-- Source visual truth: the ten dashboard references in `D:\سفارش\src\docts\`, with the order overview (`ChatGPT Image Sep 20, 2026, 10_33_18 AM.png`, 1536 × 1024) as the primary shell-density reference and the suppliers, spend, notifications, settings, comparison, and modal references as supporting pattern evidence.
-- Brand visual truth: `C:\Users\Ramtin\.codex\state\plugins\product-design\assets\sefaresh-brand-identity-guidelines-fa.pdf` (26 A4 pages), visually rendered and inspected at 72 DPI.
-- Implementation URL: `http://localhost:3000/dashboard`.
-- Implementation screenshots: captured inline from Codex in-app Browser tab 1; this browser surface did not expose a persistent screenshot file path.
-- Desktop viewport: 1440 × 1000 CSS px, device scale factor 1.
-- Mobile viewport: 390 × 844 CSS px, device scale factor 1.
-- State: dashboard overview; mobile navigation open/closed; desktop account menu open/closed.
-- Density normalization: the source references are 1× raster exports and the implementation was evaluated at CSS-pixel density. The sources define a visual system rather than an exact overview-page composition, so comparison focused on the shared shell, density, tokens, typography, cards, states, and responsive behavior.
+- Source visual truth: `D:\سفارش\docts\settings.png` (864 × 1222 px).
+- Implementation URL: `http://localhost:3000/dashboard/settings`.
+- Implementation screenshots: captured inline from Codex in-app Browser tab 1; the browser surface did not expose a persistent local screenshot path.
+- Primary comparison viewport: 864 × 1222 CSS px at device scale factor 1, matching the source pixel dimensions at 1× density.
+- Responsive verification: 1440 × 1100 desktop, 768 × 1024 tablet, and 390 × 844 mobile.
+- State: «ظاهر و تم» active, light theme selected, Persian selected, RTL selected.
+- Combined evidence: source and live implementation were rendered side-by-side at equal 864 × 1222 frames in one browser capture before the temporary comparison route was removed.
 
 ## Full-view comparison evidence
 
-- The implementation preserves the reference composition: fixed right sidebar, compact top utility/search bar, pale neutral canvas, white bordered cards, and RTL content hierarchy.
-- Sidebar width, card density, active navigation treatment, icon family, control height, and information rhythm remain visually consistent with the references without implementing their feature pages.
-- Brand balance matches the guide: surfaces remain predominantly neutral, blue carries action and selection, and orange is restricted to warning/accent use.
-- Desktop document metrics: 1440px viewport and 1440px document width, with no page overflow.
-- Mobile post-fix metrics: 390px viewport and 375px content width (scrollbar excluded), with no page overflow.
+- Both frames preserve the same RTL composition: fixed right sidebar, compact top search/actions bar, settings title and description, horizontal tab row, bordered settings panel, pale-blue appearance banner, theme previews, language selector, direction options, and blue save action.
+- At 864px the implementation keeps the sidebar persistent like the reference. At 768px and below it becomes an accessible drawer so the content remains usable on tablet and mobile.
+- The implementation is slightly taller in its inner settings panel because Persian option labels and practical 44px tap targets are retained; all primary controls remain visible without overlap or horizontal page overflow.
 
 ## Focused region comparison evidence
 
-- Navigation: official wordmark, line icons, 48px navigation rows, pale-blue active state, vertical active marker, disabled future routes, notification badges, and support card were inspected.
-- Top bar: search label, compact icon controls, unread indicator, business identity disclosure, and visible focus treatment were inspected.
-- Overview cards: typography, semantic icon backgrounds, spacing, radii, borders, and color balance were inspected.
-- Table: right-aligned Persian content, status badges, row rhythm, and contained horizontal scrolling were inspected. At 390px the table viewport is 301px wide with a 640px scrollable region, without widening the page.
-- Mobile drawer: open state, overlay, close control, disabled routes, support card, and Escape dismissal were tested.
+- Header and tabs: title hierarchy, muted supporting copy, active blue tab underline, RTL order, and horizontal overflow behavior were inspected.
+- Appearance banner: pale-blue surface, right-aligned title/copy, circular palette treatment, radius, and border were inspected.
+- Theme controls: three realistic dashboard thumbnails, light/dark/system states, selected border, radio semantics, and mobile one-column reflow were inspected.
+- Form controls: language label/select, RTL/LTR choices, save button, keyboard focus styling, loading state, and success toast were inspected.
+- Sidebar and top bar: active settings item, search, badges, account controls, mobile menu open/close, and support card were inspected against the existing design system.
 
 ## Findings
 
@@ -33,32 +30,49 @@
 
 ## Comparison history
 
-### Iteration 1 — mobile table overflow
+### Iteration 1 — active mobile tab visibility
 
-- Earlier finding: [P2] the order table's intrinsic 640px width forced its grid parent and the whole mobile document to 698px.
-- Fix: added `min-w-0` to the shared Card primitive so wide descendants stay contained by their responsive grid track.
-- Post-fix evidence: the 390px viewport now reports a 375px document width, while the table wrapper independently reports `clientWidth: 301`, `scrollWidth: 640`, and `overflow-x: auto`.
+- Earlier finding: [P2] «ظاهر و تم» was selected but initially outside the visible portion of the horizontally scrollable tab list at 390px.
+- Fix: the active tab now scrolls into the nearest visible position on load and after tab changes.
+- Post-fix evidence: the 390 × 844 capture shows «ظاهر و تم» visible with its blue underline.
+
+### Iteration 2 — thumbnail image sizing
+
+- Earlier finding: [P2] Next.js reported zero-height parents for the dashboard preview images, making thumbnails appear nearly empty.
+- Fix: preview frames now have explicit 64px heights while retaining `next/image` fill behavior.
+- Post-fix evidence: light, dark, and split system thumbnails render sharply in desktop, tablet, and mobile captures; no new image sizing warnings appeared after reload.
+
+### Iteration 3 — reference-width shell fidelity
+
+- Earlier finding: [P2] the shared dashboard shell switched to the mobile drawer at the 864px reference width, while the source keeps a fixed sidebar.
+- Fix: the shared shell breakpoint was aligned to 850px; 864px now matches the source and 768px still uses the drawer.
+- Post-fix evidence: the equal-size side-by-side comparison shows persistent right sidebars in both 864 × 1222 frames.
+
+### Iteration 4 — vertical density
+
+- Earlier finding: [P2] direction cards and section gaps made the form visibly taller than the source.
+- Fix: the banner, preview cards, direction cards, and section spacing were tightened without reducing practical control targets.
+- Post-fix evidence: the save action is visible within the 864 × 1222 frame and the panel rhythm is substantially closer to the reference.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: Vazirmatn is active with its Next.js fallback; headline, body, label, and small metadata weights follow the reference hierarchy without clipped or awkward wrapping.
-- Spacing and layout rhythm: 17rem desktop sidebar, compact sticky top bar, 12–16px radii, restrained borders/shadows, responsive stat grid, and card spacing match the supplied system.
-- Colors and visual tokens: official blue, navy, light blue, orange, neutrals, text, and border colors are mapped to semantic tokens; green, warning orange, red, and violet are reserved for state communication.
-- Image quality and asset fidelity: the official raster logo is reused through `next/image`; no reference imagery was replaced by CSS art, inline SVG, emoji, or placeholder illustration. Tabler provides the consistent line-icon set.
-- Copy and content: Persian B2B purchasing language is concise, operational, and aligned with the brand voice. Unimplemented sections are explicitly disabled instead of leading to broken pages.
+- Fonts and typography: Vazirmatn is active; heavy Persian headings, compact labels, muted supporting text, and line heights match the existing Sefaresh design system and remain readable at all tested widths.
+- Spacing and layout rhythm: panel radii, borders, pale canvas, banner height, form width, tab spacing, and responsive breakpoints reproduce the reference hierarchy without collision or clipping.
+- Colors and visual tokens: the page uses existing semantic tokens for white/neutral surfaces, navy text, muted copy, brand blue selection/action, border blue-gray, and light-blue emphasis.
+- Image quality and asset fidelity: theme previews reuse the existing real dashboard image, including dark and split-system treatments. Brand imagery remains the shared official raster asset, and standard UI icons use the existing Tabler library.
+- Copy and content: all settings copy is Persian, concise, and relevant to a cafe/restaurant purchasing account. Non-appearance tabs use realistic mock values and explicitly remain frontend-only.
 
 ## Accessibility and behavior
 
-- Document language is `fa` and direction is `rtl`.
-- Search has a programmatic label; icon-only buttons require accessible names; state badges include text; controls meet a 44px target baseline.
-- Focus rings are globally visible and the drawer respects reduced-motion preferences.
-- Mobile drawer opens correctly and dismisses through the overlay, close control, and Escape key.
-- Browser console check returned no warnings or errors on the dashboard route.
+- The document remains `lang="fa"` and `dir="rtl"`.
+- Tabs expose tablist/tab/tabpanel semantics and selected state. Theme and layout choices are native radio controls; the language control is a labelled native select.
+- Interactive controls retain visible focus indicators and practical touch targets.
+- Theme, language, direction, all seven tabs, save/loading/success feedback, and the mobile navigation drawer were exercised in the browser.
+- Production build and TypeScript checks pass. The only lint output is a pre-existing unused import warning in `src/components/layout/dashboard-header.tsx`.
 
 ## Follow-up polish
 
-- Add a focus trap and focus restoration when the mobile navigation grows beyond this initial shell.
-- Replace mock overview values with server data when the first operational flow is implemented.
-- Capture matching approved overview mockups if pixel-level regression testing becomes a requirement.
+- P3: the reference uses a different illustration in the sidebar helper card; the implementation intentionally preserves the existing shared Rosha support card from the product design system.
+- P3: theme labels are localized to Persian instead of the English labels shown in the source, matching the requested Persian interface.
 
 final result: passed

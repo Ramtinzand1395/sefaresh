@@ -16,7 +16,7 @@ export function DashboardTopbar({ onOpenNavigation }: DashboardTopbarProps) {
   return (
     <header className="sticky top-0 z-30 border-b border-line/70 bg-surface-subtle/90 px-3 py-3 backdrop-blur sm:px-4 md:px-5">
       <div className="mx-auto flex max-w-[1600px] items-center gap-2.5">
-        <IconButton label="باز کردن منو" className="lg:hidden" onClick={onOpenNavigation}>
+        <IconButton label="باز کردن منو" className="min-[850px]:hidden" onClick={onOpenNavigation}>
           <IconMenu2 size={22} aria-hidden="true" />
         </IconButton>
 

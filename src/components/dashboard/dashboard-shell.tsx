@@ -34,7 +34,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   return (
     <div className="min-h-dvh bg-surface-subtle text-ink">
-      <aside className="fixed inset-y-0 right-0 z-40 hidden w-[14.75rem] border-l border-line lg:block">
+      <aside className="fixed inset-y-0 right-0 z-40 hidden w-[14.75rem] border-l border-line min-[850px]:block">
         <DashboardSidebar activePath={pathname} />
       </aside>
 
@@ -44,7 +44,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <motion.button
               type="button"
               aria-label="بستن منوی ناوبری"
-              className="fixed inset-0 z-40 bg-ink/35 backdrop-blur-[2px] lg:hidden"
+              className="fixed inset-0 z-40 bg-ink/35 backdrop-blur-[2px] min-[850px]:hidden"
               initial={reduceMotion ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -54,7 +54,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               role="dialog"
               aria-modal="true"
               aria-label="منوی اصلی"
-              className="fixed inset-y-0 right-0 z-50 w-[min(19rem,88vw)] border-l border-line shadow-float lg:hidden"
+              className="fixed inset-y-0 right-0 z-50 w-[min(19rem,88vw)] border-l border-line shadow-float min-[850px]:hidden"
               initial={reduceMotion ? false : { x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -70,7 +70,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         ) : null}
       </AnimatePresence>
 
-      <div className="lg:pr-[14.75rem]">
+      <div className="min-[850px]:pr-[14.75rem]">
         <DashboardTopbar onOpenNavigation={() => setNavigationOpen(true)} />
         <main className="mx-auto max-w-[1600px] px-3 py-4 sm:px-4 md:px-5">{children}</main>
       </div>

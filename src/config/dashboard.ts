@@ -30,7 +30,7 @@ export const dashboardNavigation: DashboardNavigationItem[] = [
   { label: "هزینه خرید", href: "/dashboard/spend", icon: IconChartBar, implemented: false },
   { label: "تأمین‌کنندگان", href: "/dashboard/suppliers", icon: IconUsersGroup, implemented: false },
   { label: "اعلان‌ها", href: "/dashboard/notifications", icon: IconBell, implemented: false, badge: "۳" },
-  { label: "تنظیمات", href: "/dashboard/settings", icon: IconSettings, implemented: false },
+  { label: "تنظیمات", href: "/dashboard/settings", icon: IconSettings, implemented: true },
 ];
 
 export const dashboardAccount = {
