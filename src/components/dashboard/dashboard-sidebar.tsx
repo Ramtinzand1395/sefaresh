@@ -82,7 +82,7 @@ export function DashboardSidebar({ activePath, mobile = false, onClose }: Dashbo
       <div className="p-3">
         <div className="relative overflow-hidden rounded-card border border-primary/10 bg-[linear-gradient(145deg,#f4f9ff,#e8f2ff)] p-4 pt-16 text-center">
           <div className="absolute -top-8 left-1/2 size-24 -translate-x-1/2 overflow-hidden rounded-full bg-white">
-            <Image src="/images/hero-ordering.webp" alt="روشا، راهنمای سفارش" fill sizes="96px" className="scale-[2.15] object-cover object-[51%_40%]" />
+            <Image src="/images/rosha-orders.png" alt="روشا، راهنمای سفارش" fill sizes="96px" className="scale-[1.35] object-cover object-top" />
           </div>
           <p className="mt-1 text-sm font-black leading-6 text-primary">سوالی داری؟<br />روشا اینجاست!</p>
           <p className="mt-1 text-[10px] leading-5 text-ink-muted">راهنمای خرید و انتخاب</p>
