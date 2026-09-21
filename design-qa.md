@@ -58,4 +58,75 @@
 - P3: the existing application shell is intentionally reused, so the sidebar/account treatment is the production design-system version rather than a pixel-for-pixel copy of the conceptual reference shell.
 - P3: the generated gateway mark is a close source-derived asset rather than an official external brand asset, because no gateway asset pack was supplied.
 
+archived result: passed
+
+---
+
+# Design QA — Supplier Dashboard
+
+## Evidence
+
+- Source visual truth: `D:\سفارش\docts\dashboard.png` (1536 × 1024 px) for the established dashboard shell, density, card language, RTL hierarchy, and semantic color treatment; the task brief is authoritative for supplier-specific content and section order.
+- Implementation URL: `http://localhost:3000/supplier`.
+- Implementation screenshots: `D:\سفارش\implementation-supplier-dashboard-desktop-above-fold.png` (1440 × 1000 px) and `D:\سفارش\implementation-supplier-dashboard-desktop.png` (1440 × 1700 px).
+- Combined comparison evidence: `D:\سفارش\design-qa-supplier-dashboard-comparison.png` places the normalized source on the left and the browser-rendered implementation on the right.
+- Desktop comparison viewport: 1440 × 1000 CSS px at device scale factor 1. The 1536 × 1024 source was normalized with a high-quality center fit to 1440 × 1000; the implementation is native 1440 × 1000.
+- Additional responsive checks: 768 × 900 tablet and 390 × 844 mobile in the Codex in-app browser.
+- State: light mode, RTL, supplier account mock, default 30-day chart, populated KPI/action/request/order sections.
+
+## Full-view comparison evidence
+
+- The implementation preserves the production Supplier Layout and matches the source dashboard's white-card-on-neutral-canvas treatment, compact top bar, fixed right sidebar, blue primary actions, restrained shadows, rounded cards, and dense SaaS/B2B composition.
+- Supplier-specific hierarchy follows the brief rather than copying buyer-only content: greeting, four KPIs, sales/action split, purchase requests, then recent orders. The source's large Rosha welcome panel, quick actions, suggested suppliers, and product list are intentionally absent.
+- At 1440 px the KPIs form one row and the chart/action split uses the requested approximate 60/40 proportion. At 768 px KPIs form a 2 × 2 grid and the chart/action sections stack. At 390 px the dashboard becomes a single readable column, the orders table becomes cards, and measured document width stays below the viewport with no horizontal overflow.
+
+## Focused region comparison evidence
+
+- KPI cards: typography, icon tiles, semantic tones, localized amounts, trends, one-row/2 × 2/single-column behavior, and spacing were inspected.
+- Sales/action region: chart density, axis legibility, native period select, keyboard-focusable data points, active-value tooltip, action counts, variants, and explicit CTA links were inspected.
+- Purchase requests: buyer initials, city, item count, approximate value, urgency badge, touch-friendly CTA, and three-row limit were inspected.
+- Recent orders: desktop table, mobile card conversion, reusable status badges, date/amount readability, and detail actions were inspected.
+- No additional asset-focused crop was needed: this screen introduces no new raster imagery, and the existing logo/Rosha assets remain owned by the unchanged shared layout.
+
+## Findings
+
+- No actionable P0, P1, or P2 visual or interaction findings remain.
+
+## Comparison history
+
+- First comparison pass: no P0/P1/P2 mismatch was found. The page intentionally diverges from buyer-only source modules to satisfy the supplier brief while retaining the established visual system.
+- Post-implementation browser checks confirmed the same result at desktop, tablet, and mobile widths; no visual-fix iteration was required.
+
+## Required fidelity surfaces
+
+- Fonts and typography: Vazirmatn is inherited from the root layout; heading, value, label, and supporting-copy weights match the existing dashboard hierarchy. Persian numerals and currency grouping follow current project conventions.
+- Spacing and layout rhythm: shared 16px card radius, border and shadow tokens, page insets, grid gaps, section paddings, control heights, and vertical rhythm are preserved across breakpoints.
+- Colors and visual tokens: existing primary, success, warning, danger, violet, neutral surface, line, ink, and muted-ink tokens are reused; no competing palette or gradient was introduced.
+- Image quality and asset fidelity: no new image assets are required. The unchanged Supplier Layout continues to use the official brand and Rosha assets; interface imagery is not replaced with placeholders or CSS art.
+- Copy and content: all required supplier KPIs, action items, request examples, order examples, statuses, empty-state copy, Persian localization, and CTA labels are represented. The greeting uses the existing mock supplier account instead of JSX-hardcoded identity data.
+- Icons: standard UI actions use the project's existing Tabler family with consistent stroke weight and hidden decorative semantics.
+
+## Accessibility and behavior
+
+- Semantic headings, sections, lists, table headers, native select labelling, keyboard-focusable chart points, focus-visible styles, screen-reader labels, and touch-friendly actions were checked.
+- The chart period was changed from 30 days to 7 days and updated its total and accessible chart label.
+- Request detail and order detail CTAs were navigated to their new placeholder routes and returned successfully.
+- Fresh browser console logs after reload and client-side navigation contained no errors or warnings.
+- TypeScript, ESLint, production build, and `git diff --check` pass.
+
+## Open Questions
+
+- None for this stage; real dashboard data and complete request/order detail screens remain intentionally out of scope.
+
+## Implementation Checklist
+
+- [x] Preserve Supplier Layout, Header, Sidebar, and shared visual tokens.
+- [x] Implement KPI, chart, action, request, order, loading, empty, and responsive states.
+- [x] Add real navigation targets without building out-of-scope detail experiences.
+- [x] Verify RTL, overflow, keyboard semantics, console, TypeScript, lint, and build.
+
+## Follow-up Polish
+
+- P3: once the real dashboard endpoint exists, confirm chart bucketing and action priority ordering against production data volume.
+
 final result: passed

@@ -73,7 +73,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fa" dir="rtl" className={`${vazirmatn.variable} h-full scroll-smooth`}>
+    <html
+      lang="fa"
+      dir="rtl"
+      data-scroll-behavior="smooth"
+      className={`${vazirmatn.variable} h-full scroll-smooth`}
+    >
       <body className="min-h-full bg-white text-slate-800 antialiased">
         {children}
       </body>

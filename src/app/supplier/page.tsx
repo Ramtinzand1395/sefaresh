@@ -1,5 +1,11 @@
-import { SupplierRouteHeading } from "@/components/supplier/supplier-route-heading";
+import type { Metadata } from "next";
+import { SupplierDashboard } from "@/components/supplier/dashboard/supplier-dashboard";
+import { supplierDashboardMockData } from "@/data/supplier-dashboard";
+
+export const metadata: Metadata = {
+  title: "داشبورد",
+};
 
 export default function SupplierPage() {
-  return <SupplierRouteHeading>داشبورد تأمین‌کننده</SupplierRouteHeading>;
+  return <SupplierDashboard data={supplierDashboardMockData} />;
 }
