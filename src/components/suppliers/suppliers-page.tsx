@@ -4,7 +4,6 @@ import { useMemo, useState, useCallback } from "react";
 import {
   IconAdjustmentsHorizontal,
   IconPlus,
-  IconUsersGroup,
   IconX,
 } from "@tabler/icons-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -168,7 +167,6 @@ export function SuppliersPage() {
       <PageHeader
         title="تأمین‌کنندگان"
         description="تأمین‌کنندگان تأییدشده را بر اساس قیمت، کیفیت و زمان ارسال مقایسه کنید."
-        icon={IconUsersGroup}
         action={
           <div className="flex flex-wrap gap-2">
             <Button

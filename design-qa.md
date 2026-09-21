@@ -1,27 +1,28 @@
-# Design QA — Orders Page
+# Design QA — Cart and Checkout Flow
 
 ## Evidence
 
-- Source visual truth: `D:\\سفارش\\docts\\orders.png` (1536 × 1024 px) and `D:\\سفارش\\docts\\ordersMOdals.png` (1672 × 941 px).
-- Implementation URL: `http://localhost:3000/dashboard/orders`.
-- Implementation screenshots: captured inline from Codex in-app Browser tabs 1 and 2; the browser surface did not expose a persistent local screenshot path.
-- Primary comparison viewport: 1536 × 1024 CSS px at device scale factor 1, matching the primary source at 1× density.
-- Additional responsive viewports: 1536 × 1000 desktop, default 878 × 918 tablet, and 390 × 844 mobile.
-- States captured: default orders page, request-price modal, supplier-profile modal, supplier-comparison modal, order-details modal, filtered results, and mock success feedback.
-- Combined evidence: the reference was rendered as a 50%-opacity full-viewport overlay on the live 1536 × 1024 implementation, providing a same-frame alignment comparison before the temporary QA overlay was removed.
+- Source visual truth: `D:\سفارش\docts\pay\ChatGPT Image Sep 21, 2026, 09_53_21 AM.png` (1487 × 1058 px, confirmation step) and `D:\سفارش\docts\pay\ChatGPT Image Sep 21, 2026, 09_55_33 AM.png` (1487 × 1058 px, payment step), plus the four modal/request references in the same folder.
+- Implementation URL: `http://localhost:3000/dashboard/cart`.
+- Implementation screenshots: `D:\سفارش\implementation-cart-step2-final.png`, `D:\سفارش\implementation-cart-step3-final.png`, `D:\سفارش\implementation-cart-success.png`, `D:\سفارش\implementation-cart-mobile.png`, and `D:\سفارش\implementation-cart-tablet.png`.
+- Combined comparison evidence: `D:\سفارش\design-qa-cart-step2-final.png` and `D:\سفارش\design-qa-cart-step3-final.png` place the normalized source on the left and implementation on the right.
+- Primary viewport: 1536 × 1091 CSS px at device scale factor 1. Source images were normalized from 1487 × 1058 to 1536 × 1091 with high-quality bicubic interpolation; implementation captures are native 1536 × 1091.
+- Responsive viewports: 390 × 844 mobile capture and a 768 × 1024 tablet request that produced a 758 × 1011 browser-content capture after the in-app browser scrollbar/chrome adjustment.
+- States compared: cart items, confirmation/address/delivery/payment method, online payment/gateway/invoice, add-product modal, edit-address modal, delivery-time modal, and success modal.
 
 ## Full-view comparison evidence
 
-- The implementation preserves the reference hierarchy and RTL composition: fixed right sidebar, top search/actions bar, title and primary action, four status cards, compact filter row, four-row order table, then the Rosha, active-order, and attention panels.
-- The overlay comparison showed close alignment for sidebar width, content margins, card grid, table start/end positions, status colors, control density, and lower-panel ordering.
-- At tablet width the dense table intentionally becomes stacked order cards while the fixed sidebar remains available above the existing 850px shell breakpoint. At mobile width the sidebar becomes the existing accessible drawer and all filters, cards, panels, and dialogs reflow without horizontal page overflow.
+- The final implementation preserves the source hierarchy and RTL composition: existing right dashboard shell, page title, three-stage stepper, dominant working column, sticky summary column on the left, semantic white cards, and pale-blue Rosha guidance panel.
+- Card proportions, blue selection states, compact summary values, step completion markers, border radii, subdued shadows, and page density align closely with the references.
+- Desktop keeps the checkout controls and summary visible together. Tablet stacks the summary under the primary content. Mobile collapses every row into readable cards, preserves touch targets, and has no document-width overflow (`innerWidth` and `scrollWidth` both measured 390 px).
 
 ## Focused region comparison evidence
 
-- Header and summary cards: title weight, muted description, blue action, four equal cards, semantic icon surfaces, and Persian numerals were inspected.
-- Filters and order list: search, three native selects, reset state, table headers, supplier marks, product thumbnails, badges, totals, delivery copy, and row menus were inspected.
-- Lower panels: reference RTL order, active-order step indicators, attention cards, and the dedicated Rosha mascot asset were inspected after the second iteration.
-- Dialogs: request-price, supplier profile, comparison, and order details were opened and inspected against the modal reference for width, backdrop, surface radius, borders, form controls, table density, button hierarchy, and responsive stacking.
+- Stepper: active and completed states, connector colors, Persian labels, supporting copy, and compact mobile labels were inspected.
+- Summary: item count, subtotal, shipping, discount, payable amount, primary action, previous-step action, and security note were inspected.
+- Confirmation step: address card, delivery-slot radio cards, payment-method cards, Rosha banner, and their spacing/state treatments were inspected.
+- Payment step: payment choices, gateway card, generated local gateway mark, invoice switch, Rosha/security banner, and final CTA were inspected.
+- Modals: add-product filtering/list, address form, delivery picker, backdrop, close behavior, responsive scrolling, footer actions, and success state were opened and exercised.
 
 ## Findings
 
@@ -29,38 +30,32 @@
 
 ## Comparison history
 
-### Iteration 1 — reference density and RTL panel order
+### Iteration 1 — visible asset fidelity
 
-- Earlier findings: [P2] the table showed six rows instead of the reference’s four, the lower cards were mirrored relative to the RTL source, and the green monthly trend repeated its percentage.
-- Fixes: the realistic current-page mock set was reduced to four visible orders, the lower panels were ordered as attention → active tracking → Rosha in RTL grid flow, and the trend copy was normalized.
-- Post-fix evidence: the 1536 × 1000 capture shows four table rows and the same right-to-left lower-panel order as the reference; the table now gives the lower panels the intended above-the-fold prominence.
-
-### Iteration 2 — Rosha asset fidelity
-
-- Earlier finding: [P2] the shared marketing image introduced unrelated UI imagery and an incorrect crop inside both helper cards.
-- Fix: a dedicated 1145 × 1374 Rosha raster asset was generated from the supplied reference and saved at `D:\\سفارش\\public\\images\\rosha-orders.png`; both helper cards now use responsive object-fit crops of that asset.
-- Post-fix evidence: the final lower-panel and sidebar captures show a clean orange fox in royal-blue clothing holding a dark tablet, with no unrelated UI or placeholder artwork.
+- Earlier findings: [P2] the confirmation and payment guidance panels omitted the Rosha character visible in the source, and the gateway tile used a text glyph in place of a proper visual asset.
+- Fixes: both guidance panels now use the existing high-resolution `public/images/rosha-orders.png` asset with responsive crops; a dedicated transparent gateway mark was generated from the supplied payment reference and saved at `public/images/payment-zarinpal.png`.
+- Post-fix evidence: `design-qa-cart-step2-final.png` and `design-qa-cart-step3-final.png` show the expected character panel and yellow payment mark at the same visual locations as the reference.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: Vazirmatn remains the active family; black Persian headings, compact table labels, muted supporting copy, numeric weights, wrapping, and line heights match the established Sefaresh dashboard language.
-- Spacing and layout rhythm: page margins, section gaps, four-card grid, filter density, four-row table, 12–16px radii, subtle borders, and lower-panel proportions closely follow the source while retaining practical touch targets.
-- Colors and visual tokens: all surfaces use the existing semantic white/neutral, navy, brand blue, light blue, orange, success green, warning, violet, border, shadow, and focus-ring tokens.
-- Image quality and asset fidelity: product thumbnails use existing local raster assets; Rosha uses the new project-local 3D raster; the official brand mark remains unchanged; standard interface and supplier marks use the existing Tabler icon system.
-- Copy and content: all app-specific copy is Persian, concise, realistic for cafe purchasing, and consistent with the supplied references. Data remains mock-only.
-- Icons: controls use one icon family with consistent 1.6–1.8 stroke weight, optical sizes, alignment, and accessible labels.
+- Fonts and typography: Vazirmatn remains active; Persian headings use heavy optical weights, supporting labels stay compact and muted, numerals are localized, and wrapping remains controlled at desktop, tablet, and mobile sizes.
+- Spacing and layout rhythm: page insets, stepper tracks, 16px card radii, section gaps, row padding, summary width, control heights, and modal density match the established dashboard system and the supplied checkout compositions.
+- Colors and visual tokens: existing semantic white/neutral, navy, brand blue, light-blue selection, green success, red danger, border, focus, and shadow tokens are reused without introducing a competing palette.
+- Image quality and asset fidelity: product photos, official dashboard brand artwork, Rosha raster art, and the new transparent payment mark render sharply with `next/image`; no visible reference asset is replaced by CSS art, emoji, or a placeholder.
+- Copy and content: all checkout copy is concise Persian, realistic for cafe purchasing, and consistent with the source intent. Prices, address, delivery windows, order number, and products are explicit mock data only.
+- Icons: standard interface actions use the existing Tabler icon family with consistent stroke weight, alignment, and accessible names.
 
 ## Accessibility and behavior
 
-- The document remains `lang="fa"` and `dir="rtl"`; desktop tables expose proper row/cell semantics and mobile data uses labelled definition lists.
-- Inputs and selects have labels, dialogs expose `role="dialog"`, `aria-modal`, titles/descriptions, Escape handling, focus restoration, and scroll locking.
-- Buttons preserve visible focus indicators and practical touch sizes. Status is communicated with text in addition to color.
-- Search, status/date/supplier filters, reset behavior, row menus, supplier/profile comparison, radio selection, request quantity controls, mock submission, order details, and mobile layout were exercised in the browser.
-- The final browser tab reported no console errors or warnings. TypeScript, lint, production build, and `git diff --check` pass; lint retains one unrelated pre-existing unused import warning in `src/components/layout/dashboard-header.tsx`.
+- RTL structure is inherited from the application layout. Interactive controls retain visible focus states and practical touch sizes.
+- Modals expose dialog semantics, titles, descriptions, Escape/backdrop close behavior, focus restoration, and body scroll locking through the shared `Modal` component.
+- Product search/filtering, add/remove, quantity changes, address edit, delivery selection, payment selection, invoice switch, back/next navigation, final submission, reset, and success feedback were exercised in the in-app browser.
+- Desktop, tablet, and mobile layouts were captured. Browser console logs reported no errors or warnings.
+- Targeted ESLint and `git diff --check` pass. The repository-wide TypeScript command is currently blocked by an unrelated in-progress `src/app/dashboard/suppliers/page.tsx` import whose target file is absent; no cart-file lint errors remain.
 
 ## Follow-up polish
 
-- P3: the generated Rosha asset is a close reference match but is a newly rendered variant rather than the original source character file, which was not present in the repository.
-- P3: supplier identities use the existing icon library instead of unique external brand logos because no supplier asset pack was provided.
+- P3: the existing application shell is intentionally reused, so the sidebar/account treatment is the production design-system version rather than a pixel-for-pixel copy of the conceptual reference shell.
+- P3: the generated gateway mark is a close source-derived asset rather than an official external brand asset, because no gateway asset pack was supplied.
 
 final result: passed

@@ -1,78 +1,121 @@
 import Image from "next/image";
 import Link from "next/link";
-import { IconMessageCircle, IconX } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconCircleCheckFilled,
+  IconX,
+} from "@tabler/icons-react";
 import { BrandLogo } from "@/components/brand/brand-logo";
-import { dashboardNavigation } from "@/config/dashboard";
-import { cn } from "@/lib/cn";
+import { DashboardNavItem } from "@/components/dashboard/dashboard-nav-item";
+import { RoshaAssistantCard } from "@/components/dashboard/rosha-assistant-card";
 import { IconButton } from "@/components/ui/icon-button";
+import { Badge } from "@/components/ui/badge";
+import {
+  dashboardAccountByRole,
+  dashboardNavigationByRole,
+  type DashboardRole,
+} from "@/config/dashboard";
+import { cn } from "@/lib/cn";
 
 type DashboardSidebarProps = {
   activePath: string;
+  role?: DashboardRole;
   mobile?: boolean;
+  collapsed?: boolean;
   onClose?: () => void;
+  onToggleCollapsed?: () => void;
 };
 
-export function DashboardSidebar({ activePath, mobile = false, onClose }: DashboardSidebarProps) {
+export function DashboardSidebar({
+  activePath,
+  role = "buyer",
+  mobile = false,
+  collapsed = false,
+  onClose,
+  onToggleCollapsed,
+}: DashboardSidebarProps) {
+  const navigation = dashboardNavigationByRole[role];
+  const account = dashboardAccountByRole[role];
+  const verificationLabel = "verificationLabel" in account ? account.verificationLabel : null;
+
   return (
     <div className="flex h-full flex-col bg-white">
-      <div className="flex min-h-[5.5rem] items-center justify-between px-5">
+      <div
+        className={cn(
+          "flex min-h-[5.5rem] items-center justify-between gap-2 px-4",
+          collapsed && "flex-col justify-center px-2",
+        )}
+      >
         <Link href="/" aria-label="بازگشت به صفحه اصلی سفارش" onClick={onClose}>
-          <BrandLogo className="w-[145px]" priority />
+          {collapsed ? (
+            <Image
+              src="/brand/mark-sefaresh.png"
+              alt="سفارش"
+              width={48}
+              height={48}
+              priority
+              className="size-10 object-contain"
+            />
+          ) : (
+            <BrandLogo className="w-[132px]" priority />
+          )}
         </Link>
         {mobile ? (
           <IconButton label="بستن منو" className="border-0" onClick={onClose}>
             <IconX size={22} aria-hidden="true" />
           </IconButton>
+        ) : onToggleCollapsed ? (
+          <IconButton
+            label={collapsed ? "باز کردن نوار کناری" : "جمع کردن نوار کناری"}
+            className={cn("size-9 border-0", collapsed && "absolute left-1 top-3")}
+            onClick={onToggleCollapsed}
+          >
+            {collapsed ? (
+              <IconChevronLeft size={18} aria-hidden="true" />
+            ) : (
+              <IconChevronRight size={18} aria-hidden="true" />
+            )}
+          </IconButton>
         ) : null}
       </div>
 
+      {role === "supplier" ? (
+        <div className={cn("mx-3 mb-2 rounded-card border border-line bg-surface-subtle p-3", collapsed && "mx-2 p-2")}>
+          <div className={cn("flex items-center gap-2.5", collapsed && "justify-center")}>
+            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary text-xs font-black text-white ring-2 ring-primary-soft">
+              {account.initials}
+            </span>
+            <div className={cn("min-w-0", collapsed && "sr-only")}>
+              <p className="truncate text-xs font-black text-ink">{account.businessName}</p>
+              <p className="mt-0.5 text-[10px] text-ink-muted">{account.role}</p>
+            </div>
+          </div>
+          {verificationLabel && !collapsed ? (
+            <Badge variant="success" className="mt-2 min-h-6 w-full justify-center gap-1 px-2 text-[10px]">
+              <IconCircleCheckFilled size={14} aria-hidden="true" />
+              {verificationLabel}
+            </Badge>
+          ) : null}
+        </div>
+      ) : null}
+
       <nav className="flex-1 overflow-y-auto px-2.5 py-2" aria-label="ناوبری داشبورد">
         <ul className="space-y-1">
-          {dashboardNavigation.map((item) => {
-            const isActive = activePath === item.href;
-            const Icon = item.icon;
-            const content = (
-              <>
-                <Icon size={22} stroke={1.8} aria-hidden="true" />
-                <span className="flex-1">{item.label}</span>
-                {item.badge ? (
-                  <span
-                    className={cn(
-                      "grid min-w-6 place-items-center rounded-full px-1.5 py-0.5 text-[11px] font-black",
-                      isActive ? "bg-white text-primary" : "bg-primary-soft text-primary",
-                    )}
-                  >
-                    {item.badge}
-                  </span>
-                ) : null}
-              </>
-            );
+          {navigation.map((item) => {
+            const isActive =
+              activePath === item.href ||
+              (item.href !== (role === "supplier" ? "/supplier" : "/dashboard") &&
+                activePath.startsWith(`${item.href}/`));
 
             return (
               <li key={item.href}>
-                {item.implemented ? (
-                  <Link
-                    href={item.href}
-                    onClick={onClose}
-                    aria-current={isActive ? "page" : undefined}
-                    className={cn(
-                      "relative flex min-h-12 items-center gap-3 rounded-xl px-3 text-sm font-bold transition-colors",
-                      isActive
-                        ? "bg-[linear-gradient(90deg,#eef5ff,#dcecff)] text-primary after:absolute after:inset-y-1.5 after:right-0 after:w-1 after:rounded-l-full after:bg-primary"
-                        : "text-ink-muted hover:bg-surface-subtle hover:text-ink",
-                    )}
-                  >
-                    {content}
-                  </Link>
-                ) : (
-                  <span
-                    aria-disabled="true"
-                    title="این بخش در مرحله بعد ساخته می‌شود"
-                    className="flex min-h-12 cursor-not-allowed items-center gap-3 rounded-xl px-3 text-sm font-bold text-ink-muted/75"
-                  >
-                    {content}
-                  </span>
-                )}
+                <DashboardNavItem
+                  item={item}
+                  active={isActive}
+                  collapsed={collapsed}
+                  onNavigate={onClose}
+                />
               </li>
             );
           })}
@@ -80,20 +123,7 @@ export function DashboardSidebar({ activePath, mobile = false, onClose }: Dashbo
       </nav>
 
       <div className="p-3">
-        <div className="relative overflow-hidden rounded-card border border-primary/10 bg-[linear-gradient(145deg,#f4f9ff,#e8f2ff)] p-4 pt-16 text-center">
-          <div className="absolute -top-8 left-1/2 size-24 -translate-x-1/2 overflow-hidden rounded-full bg-white">
-            <Image src="/images/rosha-orders.png" alt="روشا، راهنمای سفارش" fill sizes="96px" className="scale-[1.35] object-cover object-top" />
-          </div>
-          <p className="mt-1 text-sm font-black leading-6 text-primary">سوالی داری؟<br />روشا اینجاست!</p>
-          <p className="mt-1 text-[10px] leading-5 text-ink-muted">راهنمای خرید و انتخاب</p>
-          <button
-            type="button"
-            className="mt-3 flex min-h-10 w-full items-center justify-center gap-2 rounded-xl border border-primary/20 bg-white text-xs font-black text-primary transition hover:border-primary/40"
-          >
-            <IconMessageCircle size={17} aria-hidden="true" />
-            چت با روشا
-          </button>
-        </div>
+        <RoshaAssistantCard role={role} collapsed={collapsed} />
       </div>
     </div>
   );

@@ -5,14 +5,18 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
 import { DashboardTopbar } from "@/components/dashboard/dashboard-topbar";
+import type { DashboardRole } from "@/config/dashboard";
+import { cn } from "@/lib/cn";
 
 type DashboardShellProps = {
   children: ReactNode;
+  role?: DashboardRole;
 };
 
-export function DashboardShell({ children }: DashboardShellProps) {
+export function DashboardShell({ children, role = "buyer" }: DashboardShellProps) {
   const pathname = usePathname();
   const [navigationOpen, setNavigationOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const reduceMotion = useReducedMotion();
 
   // The drawer owns scroll while open and always remains dismissible with Escape.
@@ -34,8 +38,18 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   return (
     <div className="min-h-dvh bg-surface-subtle text-ink">
-      <aside className="fixed inset-y-0 right-0 z-40 hidden w-[14.75rem] border-l border-line min-[850px]:block">
-        <DashboardSidebar activePath={pathname} />
+      <aside
+        className={cn(
+          "fixed inset-y-0 right-0 z-40 hidden border-l border-line transition-[width] duration-200 min-[850px]:block",
+          sidebarCollapsed ? "w-[5.25rem]" : "w-[15.5rem]",
+        )}
+      >
+        <DashboardSidebar
+          activePath={pathname}
+          role={role}
+          collapsed={sidebarCollapsed}
+          onToggleCollapsed={() => setSidebarCollapsed((current) => !current)}
+        />
       </aside>
 
       <AnimatePresence>
@@ -62,6 +76,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             >
               <DashboardSidebar
                 activePath={pathname}
+                role={role}
                 mobile
                 onClose={() => setNavigationOpen(false)}
               />
@@ -70,9 +85,16 @@ export function DashboardShell({ children }: DashboardShellProps) {
         ) : null}
       </AnimatePresence>
 
-      <div className="min-[850px]:pr-[14.75rem]">
-        <DashboardTopbar onOpenNavigation={() => setNavigationOpen(true)} />
-        <main className="mx-auto max-w-[1600px] px-3 py-4 sm:px-4 md:px-5">{children}</main>
+      <div
+        className={cn(
+          "transition-[padding] duration-200",
+          sidebarCollapsed ? "min-[850px]:pr-[5.25rem]" : "min-[850px]:pr-[15.5rem]",
+        )}
+      >
+        <DashboardTopbar role={role} onOpenNavigation={() => setNavigationOpen(true)} />
+        <main className="mx-auto w-full max-w-[1680px] px-3 py-4 sm:px-4 md:px-5 lg:px-6">
+          {children}
+        </main>
       </div>
     </div>
   );

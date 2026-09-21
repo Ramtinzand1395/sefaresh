@@ -519,6 +519,24 @@ function iconBg(tone: "green" | "orange" | "blue" | "violet") {
   return map[tone];
 }
 
+/** Small feature badge used in the profile modal header (e.g. "کیفیت مناسب", "ارسال به‌موقع"). */
+function HighlightBadge({
+  label,
+  icon,
+  tone,
+}: {
+  label: string;
+  icon: React.ReactNode;
+  tone: "green" | "orange" | "blue" | "violet";
+}) {
+  return (
+    <span className={cn("inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-[11px] font-bold", iconBg(tone))}>
+      {icon}
+      {label}
+    </span>
+  );
+}
+
 function FormField({
   label,
   required,
