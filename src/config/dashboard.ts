@@ -25,10 +25,10 @@ export const dashboardNavigation: DashboardNavigationItem[] = [
   { label: "داشبورد", href: "/dashboard", icon: IconHome, implemented: true },
   { label: "درخواست مواد اولیه", href: "/dashboard/requests", icon: IconClipboardList, implemented: false },
   { label: "کالاها", href: "/dashboard/products", icon: IconCube, implemented: true },
-  { label: "سبد خرید", href: "/dashboard/cart", icon: IconShoppingCart, implemented: false, badge: "۲" },
+  { label: "سبد خرید", href: "/dashboard/cart", icon: IconShoppingCart, implemented: true, badge: "۴" },
   { label: "سفارش‌ها", href: "/dashboard/orders", icon: IconReceipt, implemented: true },
-  { label: "هزینه خرید", href: "/dashboard/spend", icon: IconChartBar, implemented: false },
-  { label: "تأمین‌کنندگان", href: "/dashboard/suppliers", icon: IconUsersGroup, implemented: false },
+  { label: "هزینه خرید", href: "/dashboard/spend", icon: IconChartBar, implemented: true },
+  { label: "تأمین‌کنندگان", href: "/dashboard/suppliers", icon: IconUsersGroup, implemented: true },
   { label: "اعلان‌ها", href: "/dashboard/notifications", icon: IconBell, implemented: false, badge: "۳" },
   { label: "تنظیمات", href: "/dashboard/settings", icon: IconSettings, implemented: true },
 ];
