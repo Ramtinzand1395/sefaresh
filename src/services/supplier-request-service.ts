@@ -9,8 +9,10 @@ import type {
 } from "@/domain/types";
 import {
   findSupplierRequestForSupplier,
+  getSupplierRequestDetailForSupplier,
   getSupplierRequestInbox,
   updateSupplierRequestResponse,
+  type SupplierRequestDetailItem,
   type SupplierRequestInboxItem,
 } from "@/repositories/supplier-request-repository";
 
@@ -47,6 +49,15 @@ export async function getSupplierRequests(
 ): Promise<SupplierRequestInboxItem[]> {
   const supplierId = objectIdSchema.parse(supplierIdInput);
   return getSupplierRequestInbox(supplierId);
+}
+
+export async function getSupplierRequestDetail(
+  supplierRequestIdInput: string | ObjectId,
+  supplierIdInput: string | ObjectId,
+): Promise<SupplierRequestDetailItem | null> {
+  const supplierRequestId = objectIdSchema.parse(supplierRequestIdInput);
+  const supplierId = objectIdSchema.parse(supplierIdInput);
+  return getSupplierRequestDetailForSupplier(supplierRequestId, supplierId);
 }
 
 export async function respondToSupplierRequest(

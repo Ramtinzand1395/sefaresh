@@ -49,6 +49,10 @@ export type SupplierRequestInboxItem = {
   createdAt: Date;
 };
 
+export type SupplierRequestDetailItem = SupplierRequestInboxItem & {
+  updatedAt: Date;
+};
+
 export type SupplierRequestResponseUpdate = {
   status: SupplierRequestResponseStatus;
   offeredPrice?: number;
@@ -179,6 +183,56 @@ export async function getSupplierRequestInbox(
       },
     ])
     .toArray();
+}
+
+export async function getSupplierRequestDetailForSupplier(
+  supplierRequestId: ObjectId,
+  supplierId: ObjectId,
+): Promise<SupplierRequestDetailItem | null> {
+  const database = await getDatabase();
+  const results = await database
+    .collection<SupplierRequest>(collectionNames.supplierRequests)
+    .aggregate<SupplierRequestDetailItem>([
+      { $match: { _id: supplierRequestId, supplierId } },
+      { $limit: 1 },
+      {
+        $lookup: {
+          from: collectionNames.products,
+          localField: "productId",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+      {
+        $project: {
+          _id: 0,
+          supplierRequestId: "$_id",
+          requestItemId: 1,
+          product: {
+            _id: "$product._id",
+            title: "$product.title",
+            slug: "$product.slug",
+            brand: "$product.brand",
+            image: "$product.image",
+            unit: "$product.unit",
+            unitValue: "$product.unitValue",
+          },
+          requestedQuantity: 1,
+          status: 1,
+          offeredPrice: 1,
+          availableQuantity: 1,
+          deliveryDays: 1,
+          note: 1,
+          respondedAt: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      },
+    ])
+    .toArray();
+
+  return results[0] ?? null;
 }
 
 export async function findSupplierRequestForSupplier(

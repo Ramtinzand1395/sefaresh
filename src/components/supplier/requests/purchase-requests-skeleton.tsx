@@ -12,37 +12,23 @@ export function PurchaseRequestsSkeleton() {
         <Skeleton className="h-9 w-36 rounded-full" />
       </div>
 
-      <Card className="p-3 shadow-none sm:p-4">
-        <Skeleton className="h-12 w-full rounded-control" />
-        <div className="mt-3 hidden grid-cols-6 gap-2 lg:grid">
-          {Array.from({ length: 6 }, (_, index) => <Skeleton key={index} className="h-11 rounded-control" />)}
-        </div>
-        <div className="mt-3 grid grid-cols-2 gap-2 lg:hidden">
-          <Skeleton className="h-11 rounded-control" />
-          <Skeleton className="h-11 rounded-control" />
-        </div>
+      <Card className="grid gap-3 p-3 shadow-none sm:grid-cols-[minmax(0,1fr)_13rem] sm:p-4">
+        <Skeleton className="h-11 rounded-control" />
+        <Skeleton className="h-11 rounded-control" />
       </Card>
 
-      <div className="flex items-center justify-between">
-        <div>
-          <Skeleton className="h-6 w-36" />
-          <Skeleton className="mt-2 hidden h-4 w-72 sm:block" />
-        </div>
-        <Skeleton className="hidden h-11 w-48 rounded-control lg:block" />
-      </div>
-
+      <Skeleton className="h-6 w-36" />
       <div className="space-y-3">
         {Array.from({ length: 4 }, (_, index) => (
           <Card key={index} className="p-4 shadow-none sm:p-5">
-            <div className="grid gap-4 lg:grid-cols-[minmax(12rem,.95fr)_minmax(13rem,1.25fr)_minmax(8rem,.7fr)_minmax(9rem,.8fr)_minmax(9rem,auto)] lg:items-center">
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-[minmax(0,1.2fr)_minmax(12rem,.65fr)_minmax(13rem,.75fr)_10rem] lg:items-center">
               <div className="flex items-center gap-3">
-                <Skeleton className="size-12 shrink-0 rounded-xl" />
-                <div className="flex-1"><Skeleton className="h-4 w-28" /><Skeleton className="mt-2 h-3 w-16" /></div>
+                <Skeleton className="size-16 shrink-0 rounded-xl" />
+                <div className="flex-1"><Skeleton className="h-4 w-36" /><Skeleton className="mt-3 h-3 w-24" /><Skeleton className="mt-4 h-3 w-40" /></div>
               </div>
-              <div><Skeleton className="h-3 w-28" /><Skeleton className="mt-3 h-3 w-full" /><Skeleton className="mt-2 h-3 w-4/5" /><Skeleton className="mt-2 h-3 w-3/5" /></div>
-              <div><Skeleton className="h-3 w-20" /><Skeleton className="mt-2 h-4 w-28" /><Skeleton className="mt-4 h-3 w-24" /></div>
-              <div><Skeleton className="h-4 w-24" /><Skeleton className="mt-3 h-2 w-full rounded-full" /><Skeleton className="mt-3 h-7 w-32 rounded-full" /></div>
-              <Skeleton className="h-11 w-full rounded-control" />
+              <div><Skeleton className="h-3 w-20" /><Skeleton className="mt-3 h-7 w-24 rounded-full" /><Skeleton className="mt-3 h-3 w-36" /></div>
+              <div><Skeleton className="h-3 w-20" /><Skeleton className="mt-3 h-4 w-28" /><Skeleton className="mt-3 h-3 w-40" /></div>
+              <Skeleton className="h-11 w-full rounded-control md:col-span-2 lg:col-span-1" />
             </div>
           </Card>
         ))}
