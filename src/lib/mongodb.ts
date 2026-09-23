@@ -1,6 +1,6 @@
 import "server-only";
 
-import { MongoClient } from "mongodb";
+import { MongoClient, type Db } from "mongodb";
 import { getServerEnv } from "@/lib/env";
 
 declare global {
@@ -22,4 +22,9 @@ export function getMongoClient() {
 
   mongoClientPromise ??= createMongoClient();
   return mongoClientPromise;
+}
+
+export async function getDatabase(): Promise<Db> {
+  const client = await getMongoClient();
+  return client.db();
 }
