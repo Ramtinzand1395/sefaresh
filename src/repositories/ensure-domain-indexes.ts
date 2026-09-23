@@ -71,6 +71,10 @@ export async function ensureDomainIndexes(database?: Db): Promise<void> {
         key: { supplierId: 1, status: 1, createdAt: -1 },
         name: "supplier_request_inbox",
       },
+      {
+        key: { supplierId: 1, createdAt: -1 },
+        name: "supplier_request_inbox_recent",
+      },
     ]),
     db.collection(collectionNames.carts).createIndexes([
       { key: { cafeId: 1 }, name: "one_cart_per_cafe", unique: true },

@@ -36,11 +36,13 @@ import type {
   purchaseRequestItemSchema,
   purchaseRequestSchema,
   purchaseRequestStatusSchema,
+  respondToSupplierRequestInputSchema,
   shoppingListItemSchema,
   shoppingListItemSourceSchema,
   shoppingListSchema,
   shoppingListStatusSchema,
   supplierRequestSchema,
+  supplierRequestResponseStatusSchema,
   supplierRequestStatusSchema,
 } from "@/domain/schemas/purchasing";
 import type {
@@ -107,8 +109,14 @@ export type PurchaseRequest = z.output<typeof purchaseRequestSchema>;
 export type CreatePurchaseRequestInput = z.input<typeof createPurchaseRequestInputSchema>;
 
 export type SupplierRequestStatus = z.output<typeof supplierRequestStatusSchema>;
+export type SupplierRequestResponseStatus = z.output<
+  typeof supplierRequestResponseStatusSchema
+>;
 export type SupplierRequest = z.output<typeof supplierRequestSchema>;
 export type CreateSupplierRequestInput = z.input<typeof createSupplierRequestInputSchema>;
+export type RespondToSupplierRequestInput = z.input<
+  typeof respondToSupplierRequestInputSchema
+>;
 
 export type CartItem = z.output<typeof cartItemSchema>;
 export type Cart = z.output<typeof cartSchema>;

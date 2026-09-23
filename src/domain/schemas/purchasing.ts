@@ -173,3 +173,51 @@ export const createSupplierRequestInputSchema = supplierRequestSchema.omit({
   createdAt: true,
   updatedAt: true,
 });
+
+export const supplierRequestResponseStatusSchema = z.enum([
+  "available",
+  "partially_available",
+  "unavailable",
+  "declined",
+]);
+
+const supplierRequestResponseIdentityShape = {
+  supplierRequestId: objectIdSchema,
+  supplierId: objectIdSchema,
+  note: optionalTextSchema,
+} as const;
+
+const supplierRequestCommercialResponseShape = {
+  offeredPrice: moneySchema,
+  availableQuantity: quantitySchema,
+  deliveryDays: z.number().int().nonnegative().optional(),
+} as const;
+
+const optionalSupplierRequestCommercialResponseShape = {
+  offeredPrice: moneySchema.optional(),
+  availableQuantity: nonNegativeQuantitySchema.optional(),
+  deliveryDays: z.number().int().nonnegative().optional(),
+} as const;
+
+export const respondToSupplierRequestInputSchema = z.discriminatedUnion("status", [
+  z.object({
+    ...supplierRequestResponseIdentityShape,
+    ...supplierRequestCommercialResponseShape,
+    status: z.literal("available"),
+  }),
+  z.object({
+    ...supplierRequestResponseIdentityShape,
+    ...supplierRequestCommercialResponseShape,
+    status: z.literal("partially_available"),
+  }),
+  z.object({
+    ...supplierRequestResponseIdentityShape,
+    ...optionalSupplierRequestCommercialResponseShape,
+    status: z.literal("unavailable"),
+  }),
+  z.object({
+    ...supplierRequestResponseIdentityShape,
+    ...optionalSupplierRequestCommercialResponseShape,
+    status: z.literal("declined"),
+  }),
+]);
