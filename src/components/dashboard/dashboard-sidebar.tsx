@@ -105,7 +105,7 @@ export function DashboardSidebar({
           {navigation.map((item) => {
             const isActive =
               activePath === item.href ||
-              (item.href !== (role === "supplier" ? "/supplier" : "/dashboard") &&
+              (item.href !== (role === "supplier" ? "/supplier" : "/cafe") &&
                 activePath.startsWith(`${item.href}/`));
 
             return (

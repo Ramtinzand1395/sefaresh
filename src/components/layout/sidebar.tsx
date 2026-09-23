@@ -17,7 +17,7 @@ import {
 import { BrandLogo } from "@/components/brand/brand-logo";
 
 const sidebarLinks = [
-  { label: "داشبورد", href: "/dashboard", icon: IconHome },
+  { label: "داشبورد", href: "/cafe", icon: IconHome },
   { label: "درخواست مواد اولیه", href: "/requests", icon: IconFileText },
   { label: "کالاها", href: "/products", icon: IconBox },
   {

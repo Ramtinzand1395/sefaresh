@@ -34,14 +34,14 @@
 
 ```text
 src/
-├── app/dashboard/          # مرز route و metadata داشبورد
+├── app/cafe/               # مرز route و metadata داشبورد
 ├── components/ui/          # اجزای عمومی و بدون وابستگی دامنه
 ├── components/dashboard/   # پوسته و الگوهای مخصوص محصول
 ├── config/dashboard.ts     # ناوبری و داده ثابت پوسته
 └── lib/cn.ts               # ترکیب امن کلاس‌های utility
 ```
 
-- `app/dashboard/layout.tsx` پوسته را در همه صفحه‌های آینده حفظ می‌کند.
+- `app/cafe/layout.tsx` پوسته را در همه صفحه‌های آینده حفظ می‌کند.
 - `DashboardShell` تنها مرز client فعلی است؛ صفحات و محتوای داشبورد می‌توانند Server Component بمانند.
 - اجزای `ui` از متن و منطق کسب‌وکار مستقل‌اند و باید پیش از ساخت نسخه‌های جدید reuse شوند.
 - اجزای `dashboard` الگوهای سطح محصول مانند PageHeader و StatCard را استاندارد می‌کنند.

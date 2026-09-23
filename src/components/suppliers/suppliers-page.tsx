@@ -33,7 +33,7 @@ const defaultFilters: SupplierFilterValues = {
 };
 
 // ---------------------------------------------------------------------------
-// SuppliersPage — the client orchestrator for /dashboard/suppliers
+// SuppliersPage — the client orchestrator for /cafe/suppliers
 // ---------------------------------------------------------------------------
 
 /**

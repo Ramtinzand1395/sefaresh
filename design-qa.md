@@ -3,7 +3,7 @@
 ## Evidence
 
 - Source visual truth: `D:\سفارش\docts\pay\ChatGPT Image Sep 21, 2026, 09_53_21 AM.png` (1487 × 1058 px, confirmation step) and `D:\سفارش\docts\pay\ChatGPT Image Sep 21, 2026, 09_55_33 AM.png` (1487 × 1058 px, payment step), plus the four modal/request references in the same folder.
-- Implementation URL: `http://localhost:3000/dashboard/cart`.
+- Implementation URL: `http://localhost:3000/cafe/cart`.
 - Implementation screenshots: `D:\سفارش\implementation-cart-step2-final.png`, `D:\سفارش\implementation-cart-step3-final.png`, `D:\سفارش\implementation-cart-success.png`, `D:\سفارش\implementation-cart-mobile.png`, and `D:\سفارش\implementation-cart-tablet.png`.
 - Combined comparison evidence: `D:\سفارش\design-qa-cart-step2-final.png` and `D:\سفارش\design-qa-cart-step3-final.png` place the normalized source on the left and implementation on the right.
 - Primary viewport: 1536 × 1091 CSS px at device scale factor 1. Source images were normalized from 1487 × 1058 to 1536 × 1091 with high-quality bicubic interpolation; implementation captures are native 1536 × 1091.
@@ -51,7 +51,7 @@
 - Modals expose dialog semantics, titles, descriptions, Escape/backdrop close behavior, focus restoration, and body scroll locking through the shared `Modal` component.
 - Product search/filtering, add/remove, quantity changes, address edit, delivery selection, payment selection, invoice switch, back/next navigation, final submission, reset, and success feedback were exercised in the in-app browser.
 - Desktop, tablet, and mobile layouts were captured. Browser console logs reported no errors or warnings.
-- Targeted ESLint and `git diff --check` pass. The repository-wide TypeScript command is currently blocked by an unrelated in-progress `src/app/dashboard/suppliers/page.tsx` import whose target file is absent; no cart-file lint errors remain.
+- Targeted ESLint and `git diff --check` pass. The repository-wide TypeScript command is currently blocked by an unrelated in-progress `src/app/cafe/suppliers/page.tsx` import whose target file is absent; no cart-file lint errors remain.
 
 ## Follow-up polish
 

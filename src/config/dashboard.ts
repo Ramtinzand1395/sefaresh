@@ -29,15 +29,15 @@ export type DashboardNavigationItem = {
 
 // Future routes stay visible as an information-architecture preview, but remain disabled until built.
 export const dashboardNavigation: DashboardNavigationItem[] = [
-  { label: "داشبورد", href: "/dashboard", icon: IconHome, implemented: true },
-  { label: "درخواست مواد اولیه", href: "/dashboard/requests", icon: IconClipboardList, implemented: false },
-  { label: "کالاها", href: "/dashboard/products", icon: IconCube, implemented: true },
-  { label: "سبد خرید", href: "/dashboard/cart", icon: IconShoppingCart, implemented: true, badge: "۴" },
-  { label: "سفارش‌ها", href: "/dashboard/orders", icon: IconReceipt, implemented: true },
-  { label: "هزینه خرید", href: "/dashboard/spend", icon: IconChartBar, implemented: true },
-  { label: "تأمین‌کنندگان", href: "/dashboard/suppliers", icon: IconUsersGroup, implemented: true },
-  { label: "اعلان‌ها", href: "/dashboard/notifications", icon: IconBell, implemented: false, badge: "۳" },
-  { label: "تنظیمات", href: "/dashboard/settings", icon: IconSettings, implemented: true },
+  { label: "داشبورد", href: "/cafe", icon: IconHome, implemented: true },
+  { label: "درخواست مواد اولیه", href: "/cafe/requests", icon: IconClipboardList, implemented: false },
+  { label: "کالاها", href: "/cafe/products", icon: IconCube, implemented: true },
+  { label: "سبد خرید", href: "/cafe/cart", icon: IconShoppingCart, implemented: true, badge: "۴" },
+  { label: "سفارش‌ها", href: "/cafe/orders", icon: IconReceipt, implemented: true },
+  { label: "هزینه خرید", href: "/cafe/spend", icon: IconChartBar, implemented: true },
+  { label: "تأمین‌کنندگان", href: "/cafe/suppliers", icon: IconUsersGroup, implemented: true },
+  { label: "اعلان‌ها", href: "/cafe/notifications", icon: IconBell, implemented: false, badge: "۳" },
+  { label: "تنظیمات", href: "/cafe/settings", icon: IconSettings, implemented: true },
 ];
 
 export const supplierNavigation: DashboardNavigationItem[] = [
@@ -96,7 +96,7 @@ export const dashboardAccountByRole = {
 
 export const dashboardSearchByRole = {
   buyer: {
-    action: "/dashboard",
+    action: "/cafe",
     placeholder: "جست‌وجوی کالا، تأمین‌کننده، سفارش…",
     label: "جست‌وجو در کالاها، تأمین‌کنندگان و سفارش‌ها",
   },
