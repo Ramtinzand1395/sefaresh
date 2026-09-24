@@ -49,6 +49,7 @@ import type {
   supplierRequestStatusSchema,
   submitInternalPurchaseRequestInputSchema,
 } from "@/domain/schemas/purchasing";
+import type { ObjectId } from "mongodb";
 import type {
   cartItemSchema,
   cartSchema,
@@ -61,6 +62,11 @@ import type {
   supplierOrderSchema,
   supplierOrderStatusSchema,
 } from "@/domain/schemas/commerce";
+import type {
+  compareInputSchema,
+  compareItemInputSchema,
+  compareOfferReasonSchema,
+} from "@/domain/schemas/compare";
 
 export type SystemRole = z.output<typeof systemRoleSchema>;
 export type User = z.output<typeof userSchema>;
@@ -143,3 +149,87 @@ export type OrderItem = z.output<typeof orderItemSchema>;
 export type SupplierOrder = z.output<typeof supplierOrderSchema>;
 export type Order = z.output<typeof orderSchema>;
 export type CreateOrderInput = z.input<typeof createOrderInputSchema>;
+
+export type CompareItemInput = z.input<typeof compareItemInputSchema>;
+export type CompareInput = z.input<typeof compareInputSchema>;
+export type CompareOfferReason = z.output<typeof compareOfferReasonSchema>;
+
+export type OfferEvaluation = {
+  offerId: ObjectId;
+  productId: ObjectId;
+  supplierId: ObjectId;
+  supplierName: string;
+  requestedQuantity: number;
+  unitPrice: number;
+  lineTotal: number;
+  stock: number;
+  minOrderQuantity: number;
+  maxOrderQuantity?: number;
+  deliveryDays: number;
+  eligible: boolean;
+  reasons: CompareOfferReason[];
+};
+
+export type ComparedProductInfo = {
+  _id: ObjectId;
+  title: string;
+  brand?: string;
+  unit: ProductUnit;
+  status: ProductStatus;
+};
+
+export type ProductComparison = {
+  product: ComparedProductInfo;
+  requestedQuantity: number;
+  eligibleOffers: OfferEvaluation[];
+  unavailableOffers: OfferEvaluation[];
+  eligibleSupplierCount: number;
+  lowestEligiblePrice: number | null;
+  highestEligiblePrice: number | null;
+  lowestEligibleLineTotal: number | null;
+  fastestDeliveryDays: number | null;
+};
+
+export type SupplierScenarioCoveredItem = {
+  productId: ObjectId;
+  offerId: ObjectId;
+  requestedQuantity: number;
+  unitPrice: number;
+  lineTotal: number;
+  deliveryDays: number;
+};
+
+export type SupplierScenarioMissingItem = {
+  productId: ObjectId;
+  requestedQuantity: number;
+};
+
+export type SupplierScenario = {
+  supplierId: ObjectId;
+  supplierName: string;
+  coveredItems: SupplierScenarioCoveredItem[];
+  missingItems: SupplierScenarioMissingItem[];
+  coveredItemCount: number;
+  totalRequestedItemCount: number;
+  subtotal: number;
+  maxDeliveryDays: number | null;
+  completeCoverage: boolean;
+};
+
+export type CompareResult = {
+  products: ProductComparison[];
+  supplierScenarios: SupplierScenario[];
+  completeSupplierScenarios: SupplierScenario[];
+};
+
+export type ShoppingListCustomItem = {
+  id: ObjectId;
+  customTitle: string;
+  quantity: number;
+  note?: string;
+};
+
+export type ShoppingListCompareResult = CompareResult & {
+  shoppingListId: ObjectId;
+  unmatchedCustomItems: ShoppingListCustomItem[];
+};
