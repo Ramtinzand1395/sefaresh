@@ -22,6 +22,7 @@ import type {
   productStatusSchema,
   productUnitSchema,
   supplierOfferSchema,
+  updateSupplierOfferInputSchema,
 } from "@/domain/schemas/catalog";
 import type {
   createInternalPurchaseRequestInputSchema,
@@ -81,6 +82,7 @@ export type Product = z.output<typeof productSchema>;
 export type CreateProductInput = z.input<typeof createProductInputSchema>;
 export type SupplierOffer = z.output<typeof supplierOfferSchema>;
 export type CreateSupplierOfferInput = z.input<typeof createSupplierOfferInputSchema>;
+export type UpdateSupplierOfferInput = z.input<typeof updateSupplierOfferInputSchema>;
 
 export type InternalPurchaseRequestPriority = z.output<
   typeof internalPurchaseRequestPrioritySchema

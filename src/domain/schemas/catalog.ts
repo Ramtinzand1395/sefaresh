@@ -47,14 +47,18 @@ export const createProductInputSchema = productSchema.omit({
   updatedAt: true,
 });
 
-const supplierOfferShape = {
-  supplierId: objectIdSchema,
-  productId: objectIdSchema,
+const supplierOfferCommercialShape = {
   price: moneySchema,
   stock: nonNegativeQuantitySchema,
   minOrderQuantity: quantitySchema,
   maxOrderQuantity: quantitySchema.optional(),
   deliveryDays: z.number().int().nonnegative(),
+} as const;
+
+const supplierOfferShape = {
+  supplierId: objectIdSchema,
+  productId: objectIdSchema,
+  ...supplierOfferCommercialShape,
   isActive: z.boolean(),
 } as const;
 
@@ -80,4 +84,8 @@ export const supplierOfferSchema = z
 
 export const createSupplierOfferInputSchema = z
   .object(supplierOfferShape)
+  .superRefine(validateOrderQuantityRange);
+
+export const updateSupplierOfferInputSchema = z
+  .object(supplierOfferCommercialShape)
   .superRefine(validateOrderQuantityRange);
