@@ -73,6 +73,46 @@ export const createInternalPurchaseRequestInputSchema = internalPurchaseRequestS
   updatedAt: true,
 });
 
+export const submitInternalPurchaseRequestItemSchema = z
+  .object({
+    productId: objectIdSchema.optional(),
+    customTitle: z.string().trim().min(1).max(200).optional(),
+    quantity: quantitySchema,
+    note: optionalTextSchema,
+  })
+  .superRefine(requireProductOrCustomTitle);
+
+export const submitInternalPurchaseRequestInputSchema = z.object({
+  cafeId: objectIdSchema,
+  requestedBy: objectIdSchema,
+  items: z.array(submitInternalPurchaseRequestItemSchema).min(1),
+  reason: optionalTextSchema,
+  priority: internalPurchaseRequestPrioritySchema,
+});
+
+export const reviewInternalPurchaseRequestItemInputSchema = z.discriminatedUnion(
+  "approvalStatus",
+  [
+    z.object({
+      requestItemId: objectIdSchema,
+      approvalStatus: z.literal("approved"),
+      approvedQuantity: quantitySchema,
+    }),
+    z.object({
+      requestItemId: objectIdSchema,
+      approvalStatus: z.literal("rejected"),
+      approvedQuantity: z.literal(0).optional(),
+    }),
+  ],
+);
+
+export const reviewInternalPurchaseRequestInputSchema = z.object({
+  internalPurchaseRequestId: objectIdSchema,
+  reviewedBy: objectIdSchema,
+  items: z.array(reviewInternalPurchaseRequestItemInputSchema).min(1),
+  reviewNote: optionalTextSchema,
+});
+
 export const shoppingListStatusSchema = z.enum(["active", "converted", "archived"]);
 
 export const shoppingListItemSourceSchema = z.discriminatedUnion("type", [
@@ -108,6 +148,12 @@ export const createShoppingListInputSchema = shoppingListSchema.omit({
   _id: true,
   createdAt: true,
   updatedAt: true,
+});
+
+export const addApprovedInternalRequestToShoppingListInputSchema = z.object({
+  internalPurchaseRequestId: objectIdSchema,
+  addedBy: objectIdSchema,
+  shoppingListId: objectIdSchema.optional(),
 });
 
 export const purchaseRequestStatusSchema = z.enum([

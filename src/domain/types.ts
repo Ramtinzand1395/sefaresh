@@ -25,6 +25,7 @@ import type {
   updateSupplierOfferInputSchema,
 } from "@/domain/schemas/catalog";
 import type {
+  addApprovedInternalRequestToShoppingListInputSchema,
   createInternalPurchaseRequestInputSchema,
   createPurchaseRequestInputSchema,
   createShoppingListInputSchema,
@@ -38,6 +39,7 @@ import type {
   purchaseRequestSchema,
   purchaseRequestStatusSchema,
   respondToSupplierRequestInputSchema,
+  reviewInternalPurchaseRequestInputSchema,
   shoppingListItemSchema,
   shoppingListItemSourceSchema,
   shoppingListSchema,
@@ -45,6 +47,7 @@ import type {
   supplierRequestSchema,
   supplierRequestResponseStatusSchema,
   supplierRequestStatusSchema,
+  submitInternalPurchaseRequestInputSchema,
 } from "@/domain/schemas/purchasing";
 import type {
   cartItemSchema,
@@ -98,12 +101,21 @@ export type InternalPurchaseRequest = z.output<typeof internalPurchaseRequestSch
 export type CreateInternalPurchaseRequestInput = z.input<
   typeof createInternalPurchaseRequestInputSchema
 >;
+export type SubmitInternalPurchaseRequestInput = z.input<
+  typeof submitInternalPurchaseRequestInputSchema
+>;
+export type ReviewInternalPurchaseRequestInput = z.input<
+  typeof reviewInternalPurchaseRequestInputSchema
+>;
 
 export type ShoppingListStatus = z.output<typeof shoppingListStatusSchema>;
 export type ShoppingListItemSource = z.output<typeof shoppingListItemSourceSchema>;
 export type ShoppingListItem = z.output<typeof shoppingListItemSchema>;
 export type ShoppingList = z.output<typeof shoppingListSchema>;
 export type CreateShoppingListInput = z.input<typeof createShoppingListInputSchema>;
+export type AddApprovedInternalRequestToShoppingListInput = z.input<
+  typeof addApprovedInternalRequestToShoppingListInputSchema
+>;
 
 export type PurchaseRequestStatus = z.output<typeof purchaseRequestStatusSchema>;
 export type PurchaseRequestItem = z.output<typeof purchaseRequestItemSchema>;

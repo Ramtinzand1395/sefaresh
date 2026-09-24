@@ -54,6 +54,12 @@ export async function ensureDomainIndexes(database?: Db): Promise<void> {
         key: { cafeId: 1, status: 1, updatedAt: -1 },
         name: "cafe_shopping_lists",
       },
+      {
+        key: { cafeId: 1, status: 1 },
+        name: "one_active_shopping_list_per_cafe",
+        unique: true,
+        partialFilterExpression: { status: "active" },
+      },
     ]),
     db.collection(collectionNames.purchaseRequests).createIndexes([
       {
