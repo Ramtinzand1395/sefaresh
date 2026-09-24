@@ -2,6 +2,7 @@ import { IconBell, IconMoodEmpty, IconSearch } from "@tabler/icons-react";
 import { NotificationCard } from "@/components/notifications/notification-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { NotificationItem } from "@/data/notifications";
 
 type NotificationListProps = {
@@ -82,13 +83,13 @@ export function NotificationListSkeleton() {
           key={i}
           className="flex gap-4 rounded-card border border-line bg-white p-5 shadow-card"
         >
-          <div className="size-12 shrink-0 animate-pulse rounded-2xl bg-surface-subtle" />
+          <Skeleton className="size-12 shrink-0 rounded-2xl" />
           <div className="flex-1 space-y-3">
-            <div className="h-4 w-3/5 animate-pulse rounded bg-surface-subtle" />
-            <div className="h-3 w-4/5 animate-pulse rounded bg-surface-subtle" />
+            <Skeleton className="h-4 w-3/5" />
+            <Skeleton className="h-3 w-4/5" />
             <div className="flex gap-2">
-              <div className="h-7 w-16 animate-pulse rounded-full bg-surface-subtle" />
-              <div className="h-7 w-24 animate-pulse rounded-full bg-surface-subtle" />
+              <Skeleton className="h-7 w-16 rounded-full" />
+              <Skeleton className="h-7 w-24 rounded-full" />
             </div>
           </div>
         </div>

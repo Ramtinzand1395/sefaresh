@@ -36,7 +36,7 @@ export const dashboardNavigation: DashboardNavigationItem[] = [
   { label: "سفارش‌ها", href: "/cafe/orders", icon: IconReceipt, implemented: true },
   { label: "هزینه خرید", href: "/cafe/spend", icon: IconChartBar, implemented: true },
   { label: "تأمین‌کنندگان", href: "/cafe/suppliers", icon: IconUsersGroup, implemented: true },
-  { label: "اعلان‌ها", href: "/cafe/notifications", icon: IconBell, implemented: false, badge: "۳" },
+  { label: "اعلان‌ها", href: "/cafe/notifications", icon: IconBell, implemented: true, badge: "۳" },
   { label: "تنظیمات", href: "/cafe/settings", icon: IconSettings, implemented: true },
 ];
 
