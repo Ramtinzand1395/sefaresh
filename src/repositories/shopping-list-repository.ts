@@ -27,6 +27,89 @@ export async function findActiveShoppingList(
   return collection.findOne({ cafeId, status: "active" });
 }
 
+export type ShoppingListDetailItem = {
+  id: ObjectId;
+  productId?: ObjectId;
+  productTitle?: string;
+  productBrand?: string;
+  productUnit?: string;
+  customTitle?: string;
+  quantity: number;
+  note?: string;
+  source: ShoppingListItem["source"];
+};
+
+export type ShoppingListDetail = {
+  _id: ObjectId;
+  cafeId: ObjectId;
+  name: string;
+  status: ShoppingList["status"];
+  items: ShoppingListDetailItem[];
+  createdBy: ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export async function getActiveShoppingListForCafe(
+  cafeId: ObjectId,
+): Promise<ShoppingListDetail | null> {
+  const shoppingList = await findActiveShoppingList(cafeId);
+  if (!shoppingList) {
+    return null;
+  }
+
+  const productIds = shoppingList.items
+    .map((item) => item.productId)
+    .filter((id): id is ObjectId => id !== undefined);
+
+  let productMap = new Map<string, { title: string; brand?: string; unit?: string }>();
+  if (productIds.length > 0) {
+    const productsCollection = await getDomainCollection("products");
+    const products = await productsCollection
+      .find(
+        { _id: { $in: productIds } },
+        { projection: { _id: 1, title: 1, brand: 1, unit: 1 } },
+      )
+      .toArray();
+
+    productMap = new Map(
+      products.map((p) => [
+        p._id.toHexString(),
+        { title: p.title, brand: p.brand, unit: p.unit },
+      ]),
+    );
+  }
+
+  const items: ShoppingListDetailItem[] = shoppingList.items.map((item) => {
+    const productInfo = item.productId
+      ? productMap.get(item.productId.toHexString())
+      : undefined;
+
+    return {
+      id: item.id,
+      productId: item.productId,
+      productTitle: productInfo?.title,
+      productBrand: productInfo?.brand,
+      productUnit: productInfo?.unit,
+      customTitle: item.customTitle,
+      quantity: item.quantity,
+      note: item.note,
+      source: item.source,
+    };
+  });
+
+  return {
+    _id: shoppingList._id,
+    cafeId: shoppingList.cafeId,
+    name: shoppingList.name,
+    status: shoppingList.status,
+    items,
+    createdBy: shoppingList.createdBy,
+    createdAt: shoppingList.createdAt,
+    updatedAt: shoppingList.updatedAt,
+  };
+}
+
 export async function findOrCreateActiveShoppingList(
   cafeId: ObjectId,
   createdBy: ObjectId,

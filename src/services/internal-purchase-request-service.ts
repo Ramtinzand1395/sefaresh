@@ -17,8 +17,12 @@ import { findActiveCafeMember } from "@/repositories/cafe-membership-repository"
 import {
   findActiveProductIds,
   findInternalPurchaseRequestById,
+  getInternalPurchaseRequestForCafe,
   insertInternalPurchaseRequest,
+  listInternalPurchaseRequestsForCafe,
   reviewPendingInternalPurchaseRequest,
+  type InternalPurchaseRequestDetail,
+  type InternalPurchaseRequestListItem,
 } from "@/repositories/internal-purchase-request-repository";
 
 const REVIEWER_ROLES = new Set(["owner", "manager", "purchase_manager"]);
@@ -230,3 +234,18 @@ export async function reviewInternalPurchaseRequest(
 
   return updatedRequest;
 }
+
+export async function listCafeInternalPurchaseRequests(
+  cafeId: ObjectId,
+  limit?: number,
+): Promise<InternalPurchaseRequestListItem[]> {
+  return listInternalPurchaseRequestsForCafe(cafeId, limit);
+}
+
+export async function getCafeInternalPurchaseRequestDetail(
+  requestId: ObjectId,
+  cafeId: ObjectId,
+): Promise<InternalPurchaseRequestDetail | null> {
+  return getInternalPurchaseRequestForCafe(requestId, cafeId);
+}
+

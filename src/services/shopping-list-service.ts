@@ -13,6 +13,8 @@ import {
   appendInternalRequestItemsIfMissing,
   findOrCreateActiveShoppingList,
   findShoppingListById,
+  getActiveShoppingListForCafe as getActiveShoppingListFromRepo,
+  type ShoppingListDetail,
 } from "@/repositories/shopping-list-repository";
 
 const DEFAULT_ACTIVE_LIST_NAME = "لیست خرید جاری";
@@ -163,3 +165,10 @@ export async function addApprovedInternalRequestToShoppingList(
     existingItemCount: shoppingListItems.length - appendResult.addedCount,
   };
 }
+
+export async function getActiveShoppingListForCafe(
+  cafeId: ObjectId,
+): Promise<ShoppingListDetail | null> {
+  return getActiveShoppingListFromRepo(cafeId);
+}
+

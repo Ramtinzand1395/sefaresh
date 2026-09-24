@@ -30,7 +30,8 @@ export type DashboardNavigationItem = {
 // Future routes stay visible as an information-architecture preview, but remain disabled until built.
 export const dashboardNavigation: DashboardNavigationItem[] = [
   { label: "داشبورد", href: "/cafe", icon: IconHome, implemented: true },
-  { label: "درخواست مواد اولیه", href: "/cafe/requests", icon: IconClipboardList, implemented: false },
+  { label: "درخواست‌های خرید", href: "/cafe/requests", icon: IconClipboardList, implemented: true },
+  { label: "لیست خرید", href: "/cafe/shopping-list", icon: IconFileText, implemented: true },
   { label: "کالاها", href: "/cafe/products", icon: IconCube, implemented: true },
   { label: "سبد خرید", href: "/cafe/cart", icon: IconShoppingCart, implemented: true, badge: "۴" },
   { label: "سفارش‌ها", href: "/cafe/orders", icon: IconReceipt, implemented: true },
