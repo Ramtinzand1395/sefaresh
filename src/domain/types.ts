@@ -37,9 +37,12 @@ import type {
   internalPurchaseRequestStatusSchema,
   purchaseRequestItemSchema,
   purchaseRequestSchema,
+  purchaseRequestSelectionItemSchema,
+  purchaseRequestSelectionSchema,
   purchaseRequestStatusSchema,
   respondToSupplierRequestInputSchema,
   reviewInternalPurchaseRequestInputSchema,
+  savePurchaseRequestSelectionInputSchema,
   shoppingListItemSchema,
   shoppingListItemSourceSchema,
   shoppingListSchema,
@@ -127,6 +130,16 @@ export type PurchaseRequestStatus = z.output<typeof purchaseRequestStatusSchema>
 export type PurchaseRequestItem = z.output<typeof purchaseRequestItemSchema>;
 export type PurchaseRequest = z.output<typeof purchaseRequestSchema>;
 export type CreatePurchaseRequestInput = z.input<typeof createPurchaseRequestInputSchema>;
+export type PurchaseRequestSelectionItem = z.output<
+  typeof purchaseRequestSelectionItemSchema
+>;
+export type PurchaseRequestSelection = z.output<
+  typeof purchaseRequestSelectionSchema
+>;
+export type SavePurchaseRequestSelectionInput = z.input<
+  typeof savePurchaseRequestSelectionInputSchema
+>;
+
 
 export type SupplierRequestStatus = z.output<typeof supplierRequestStatusSchema>;
 export type SupplierRequestResponseStatus = z.output<

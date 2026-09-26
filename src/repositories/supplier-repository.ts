@@ -22,3 +22,28 @@ export async function findEligibleSupplierIds(supplierIds: ObjectId[]): Promise<
 
   return new Set(suppliers.map((supplier) => supplier._id.toHexString()));
 }
+
+export type SupplierSummary = {
+  _id: ObjectId;
+  name: string;
+  isVerified: boolean;
+  rating: number;
+  status: string;
+};
+
+export async function findSuppliersByIds(
+  supplierIds: ObjectId[],
+): Promise<SupplierSummary[]> {
+  if (supplierIds.length === 0) {
+    return [];
+  }
+
+  const collection = await getDomainCollection("suppliers");
+  return collection
+    .find(
+      { _id: { $in: supplierIds } },
+      { projection: { _id: 1, name: 1, isVerified: 1, rating: 1, status: 1 } },
+    )
+    .toArray() as Promise<SupplierSummary[]>;
+}
+

@@ -58,3 +58,34 @@ export function toCafeRequestDetailView(
     items: detail.items.map(toCafeRequestDetailItemView),
   };
 }
+
+export function toRfqListItemView(
+  item: {
+    _id: { toHexString: () => string };
+    title: string;
+    status: "draft" | "matching" | "collecting_offers" | "completed" | "cancelled" | "expired";
+    itemCount: number;
+    neededAt?: Date;
+    expiresAt?: Date;
+    createdAt: Date;
+  },
+): {
+  id: string;
+  title: string;
+  status: "draft" | "matching" | "collecting_offers" | "completed" | "cancelled" | "expired";
+  itemCount: number;
+  neededAt?: string;
+  expiresAt?: string;
+  createdAt: string;
+} {
+  return {
+    id: item._id.toHexString(),
+    title: item.title,
+    status: item.status,
+    itemCount: item.itemCount,
+    neededAt: item.neededAt?.toISOString(),
+    expiresAt: item.expiresAt?.toISOString(),
+    createdAt: item.createdAt.toISOString(),
+  };
+}
+

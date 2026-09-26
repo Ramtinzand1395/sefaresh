@@ -19,6 +19,23 @@ export type CafeRequestListItemView = {
   requesterName?: string;
 };
 
+export type RfqListItemView = {
+  id: string;
+  title: string;
+  status:
+    | "draft"
+    | "matching"
+    | "collecting_offers"
+    | "completed"
+    | "cancelled"
+    | "expired";
+  itemCount: number;
+  neededAt?: string;
+  expiresAt?: string;
+  createdAt: string;
+};
+
+
 export type CafeRequestDetailItemView = {
   id: string;
   productId?: string;

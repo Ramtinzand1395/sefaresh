@@ -7,6 +7,7 @@ import type {
   Order,
   Product,
   PurchaseRequest,
+  PurchaseRequestSelection,
   ShoppingList,
   Supplier,
   SupplierOffer,
@@ -25,6 +26,7 @@ export const collectionNames = {
   internalPurchaseRequests: "internal_purchase_requests",
   shoppingLists: "shopping_lists",
   purchaseRequests: "purchase_requests",
+  purchaseRequestSelections: "purchase_request_selections",
   supplierRequests: "supplier_requests",
   carts: "carts",
   orders: "orders",
@@ -41,6 +43,7 @@ export type DomainCollections = {
   internalPurchaseRequests: InternalPurchaseRequest;
   shoppingLists: ShoppingList;
   purchaseRequests: PurchaseRequest;
+  purchaseRequestSelections: PurchaseRequestSelection;
   supplierRequests: SupplierRequest;
   carts: Cart;
   orders: Order;

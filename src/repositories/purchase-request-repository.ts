@@ -104,3 +104,41 @@ export async function findPurchaseRequestByIdForCafe(
   return collection.findOne({ _id: purchaseRequestId, cafeId });
 }
 
+export type PurchaseRequestListItem = {
+  _id: ObjectId;
+  cafeId: ObjectId;
+  title: string;
+  status: PurchaseRequest["status"];
+  itemCount: number;
+  neededAt?: Date;
+  expiresAt?: Date;
+  createdAt: Date;
+};
+
+export async function listPurchaseRequestsForCafe(
+  cafeId: ObjectId,
+  limit = 50,
+): Promise<PurchaseRequestListItem[]> {
+  const collection = await getDomainCollection("purchaseRequests");
+  return collection
+    .aggregate<PurchaseRequestListItem>([
+      { $match: { cafeId } },
+      { $sort: { createdAt: -1 } },
+      { $limit: Math.min(Math.max(limit, 1), 100) },
+      {
+        $project: {
+          _id: 1,
+          cafeId: 1,
+          title: 1,
+          status: 1,
+          itemCount: { $size: "$items" },
+          neededAt: 1,
+          expiresAt: 1,
+          createdAt: 1,
+        },
+      },
+    ])
+    .toArray();
+}
+
+

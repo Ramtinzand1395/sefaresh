@@ -288,3 +288,11 @@ export async function updateSupplierRequestResponse(
     { returnDocument: "after" },
   );
 }
+
+export async function findSupplierRequestsByPurchaseRequestId(
+  purchaseRequestId: ObjectId,
+): Promise<SupplierRequest[]> {
+  const collection = await getDomainCollection("supplierRequests");
+  return collection.find({ purchaseRequestId }).toArray();
+}
+

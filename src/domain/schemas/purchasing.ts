@@ -267,3 +267,33 @@ export const respondToSupplierRequestInputSchema = z.discriminatedUnion("status"
     status: z.literal("declined"),
   }),
 ]);
+
+export const purchaseRequestSelectionItemSchema = z.object({
+  requestItemId: objectIdSchema,
+  supplierRequestId: objectIdSchema,
+  supplierId: objectIdSchema,
+  quantity: quantitySchema,
+  unitPriceSnapshot: moneySchema,
+  deliveryDaysSnapshot: z.number().int().nonnegative().optional(),
+});
+
+export const purchaseRequestSelectionSchema = z.object({
+  ...documentShape,
+  cafeId: objectIdSchema,
+  purchaseRequestId: objectIdSchema,
+  items: z.array(purchaseRequestSelectionItemSchema).min(1),
+  createdBy: objectIdSchema,
+});
+
+export const savePurchaseRequestSelectionItemInputSchema = z.object({
+  requestItemId: objectIdSchema,
+  supplierRequestId: objectIdSchema,
+});
+
+export const savePurchaseRequestSelectionInputSchema = z.object({
+  cafeId: objectIdSchema,
+  purchaseRequestId: objectIdSchema,
+  createdBy: objectIdSchema,
+  items: z.array(savePurchaseRequestSelectionItemInputSchema).min(1),
+});
+

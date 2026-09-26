@@ -67,6 +67,13 @@ export async function ensureDomainIndexes(database?: Db): Promise<void> {
         name: "cafe_purchase_requests",
       },
     ]),
+    db.collection(collectionNames.purchaseRequestSelections).createIndexes([
+      {
+        key: { cafeId: 1, purchaseRequestId: 1 },
+        name: "cafe_purchase_request_selection_unique",
+        unique: true,
+      },
+    ]),
     db.collection(collectionNames.supplierRequests).createIndexes([
       {
         key: { purchaseRequestId: 1, requestItemId: 1, supplierId: 1 },
