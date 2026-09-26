@@ -80,3 +80,27 @@ export async function finishPurchaseRequestMatching(
     { $set: { status: "collecting_offers", updatedAt: now } },
   );
 }
+
+export async function insertPurchaseRequest(
+  request: PurchaseRequest,
+): Promise<PurchaseRequest> {
+  const collection = await getDomainCollection("purchaseRequests");
+  await collection.insertOne(request);
+  return request;
+}
+
+export async function findPurchaseRequestById(
+  purchaseRequestId: ObjectId,
+): Promise<PurchaseRequest | null> {
+  const collection = await getDomainCollection("purchaseRequests");
+  return collection.findOne({ _id: purchaseRequestId });
+}
+
+export async function findPurchaseRequestByIdForCafe(
+  purchaseRequestId: ObjectId,
+  cafeId: ObjectId,
+): Promise<PurchaseRequest | null> {
+  const collection = await getDomainCollection("purchaseRequests");
+  return collection.findOne({ _id: purchaseRequestId, cafeId });
+}
+
